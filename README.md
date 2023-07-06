@@ -1,5 +1,5 @@
-# bethedging_stochastic
-[Beyond the (geometric) mean: stochastic models undermine deterministic predictions of bet hedger evolution](linktopaper).
+# Beyond the (geometric) mean: stochastic models undermine deterministic predictions of bet hedger evolution
+[Link to paper.](linktopaper).
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -10,7 +10,7 @@
       <ul>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#julia-sims">Julia Stochastic Simulations</a></li>
-        <li><a href="#matlab-sims">Matlab Markov Numerics</a></li>
+        <li><a href="#MATLAB-sims">MATLAB Markov Numerics</a></li>
       </ul>
     </li>
     <li><a href="#contact">Contact</a></li>
@@ -32,11 +32,11 @@ Simulation code is written in the following languages and packages:
   * [Interpolations.jl Package](http://juliamath.github.io/Interpolations.jl/latest/)
   * [Dates.jl Package](https://docs.julialang.org/en/v1/stdlib/Dates/)
   * [Base.Threads.jl Package](https://docs.julialang.org/en/v1/base/multi-threading/)
-* [MatLab Programming Language](https://www.mathworks.com/products/matlab/programming-with-matlab.html)
+* [MATLAB Programming Language](https://www.mathworks.com/products/MATLAB/programming-with-MATLAB.html)
 
 ### Julia Stochastic Simulations <a name="julia-sims"></a>
 
-Stochastic, individual based simulations written in Julia. We model the evolution of bet hedging in asexual populations of constant size *N* evolving in discrete non-overlapping generations under the Wright-Fisher model.
+Stochastic, individual based simulations written in Julia. We model the evolution of bet hedging in asexual populations of constant size *N* evolving in discrete non-overlapping generations under the Wright-Fisher model. Julia code written for Release 1.6.2.
 
 Simulation code:
 * [bhpfix_sim.jl](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/julia_sims/bhpfix_sim.jl) constructs a normalized probability of fixation curve as a function of population size.
@@ -45,9 +45,9 @@ Simulation code:
 * [paramspace.jl](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/julia_sims/paramspace.jl) extends the previous NPfix simulation across parameter space, for all values of pSpec and Delta GMF. The sign of selection for the NPFix curve at every point in parameter space is automatically classified as deleterious, neutral, sign inversion, beneficial, or unknown.
   * Used to construct Fig. 4, Supplemental Fig. 2
 
-### Matlab Markov Numerics <a name="matlab-sims"></a>
+### MATLAB Markov Numerics <a name="MATLAB-sims"></a>
 
-Markov transition matrices written in the MatLab Programming Language that numerically estimate the probability of fixation.
+Markov transition matrices written in the MATLAB Programming Language that numerically estimate the probability of fixation. MATLAB Code written for Release 2019B.
 
 Functions:
 * [construct_markov.m](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/matlab_sims/construct_markov.m) constructs a generic single generation Markovian transition matrix.
@@ -60,12 +60,12 @@ Functions:
   * Function Inputs: wa = fitness of specialist phenotype in A, wb = fitness of specialist phenotype in B, s = Delta GMF, pS = pSpec of BH, N = population size, emodel = environmental stochasticity on or off
 
 Simulation code:
-* [markovnpf_multistoch.m](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/matlab_sims/markovnpf_multistoch.m) numerically estimates the probability of fixation for a single bet hedging mutant by finding the stationary distribution of the transition matrix.
+* [markovnpf_multistoch.m](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/MATLAB_sims/markovnpf_multistoch.m) numerically estimates the probability of fixation for a single bet hedging mutant by finding the stationary distribution of the transition matrix.
   * Used to construct Fig. 2, Fig. 3A
-* [markovmodel_genstats.m](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/matlab_sims/markovmodel_genstats.m) analyzes Markov matrices at the end of the first generation and first effective generation
+* [markovmodel_genstats.m](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/MATLAB_sims/markovmodel_genstats.m) analyzes Markov matrices at the end of the first generation and first effective generation
   * Used to construct Fig. 3B-C, Supplemental Fig. 1
 
 <!-- CONTACT -->
 ## Contact <a name="contact"></a>
 
-Maya Weissman - [@maya_weissman](https://twitter.com/maya_weissman) - maya_weissman@brown.edu
+[Personal Website](https://sciencemaya.com) - [Twitter](https://twitter.com/maya_weissman) - maya_weissman@brown.edu
