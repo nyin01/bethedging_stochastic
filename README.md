@@ -1,5 +1,5 @@
 # Beyond the (geometric) mean: stochastic models undermine deterministic predictions of bet hedger evolution
-[Link to paper.](linktopaper).
+[Link to paper](linktopaper).
 
 <!-- TABLE OF CONTENTS -->
 <details>
