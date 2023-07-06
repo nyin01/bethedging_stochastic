@@ -32,7 +32,7 @@ Simulation code is written in the following languages and packages:
   * [Interpolations.jl Package](http://juliamath.github.io/Interpolations.jl/latest/)
   * [Dates.jl Package](https://docs.julialang.org/en/v1/stdlib/Dates/)
   * [Base.Threads.jl Package](https://docs.julialang.org/en/v1/base/multi-threading/)
-* [MatLab Programmin Language](https://www.mathworks.com/products/matlab/programming-with-matlab.html)
+* [MatLab Programming Language](https://www.mathworks.com/products/matlab/programming-with-matlab.html)
 
 ### Julia Stochastic Simulations <a name="julia-sims"></a>
 
