@@ -1,5 +1,5 @@
 # bethedging_stochastic
-Simulation code for research on how stochastic models of bet hedger evolution defy deterministic predictions. [Link to paper].
+[Beyond the (geometric) mean: stochastic models undermine deterministic predictions of bet hedger evolution](linktopaper).
 
 <!-- TABLE OF CONTENTS -->
 <details>
