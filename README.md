@@ -20,7 +20,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About This Research <a name="about-the-project"></a>
 
-Bet hedging is a ubiquitous strategy for risk reduction in the face of unpredictable environmental change where a lineage lowers its variance in fitness across environments at the expense of also lowering its arithmetic mean fitness. Previous, deterministic research has quantified this trade-off using geometric mean fitness (GMF), and has found that bet hedging is expected to evolve only if it has a higher GMF than the wild-type. We introduce a novel stochastic framework that leverages both individual-based simulations and Markov chain numerics to capture the effects of stochasticity in the phenotypic distribution of diversified bet hedger offspring, environmental regime, and reproductive output. We find that modeling stochasticity can alter the sign of selection for the bet hedger when the GMF of the bet hedger is greater than, equal to, and less than the wild-type. We show that stochasticity in phenotypic distribution and in environment drive the sign of selection to differ from the deterministic prediction in different ways: phenotypic stochasticity causes bet hedging to be less beneficial than predicted, while environmental stochasticity causes bet hedging to be more beneficial than predicted. We conclude that existing, deterministic methods may not be sufficient to predict when bet hedging traits are adaptive.
+Bet hedging is a ubiquitous strategy for risk reduction in the face of unpredictable environmental change where a lineage lowers its variance in fitness across environments at the expense of also lowering its arithmetic mean fitness. Classically, the benefit of bet hedging has been quantified using geometric mean fitness (GMF); bet hedging is expected to evolve if and only if it has a higher GMF than the wild-type. We build upon previous research on the effect of incorporating stochasticity in phenotypic distribution, environment, and reproduction to investigate the extent to which these sources of stochasticity will impact the evolution of real-world bet hedging traits. We utilize both individual-based simulations and Markov chain numerics to demonstrate that modeling stochasticity can alter the sign of selection for the bet hedger compared to deterministic predictions. We find that bet hedging can be deleterious at small population sizes and beneficial at larger population sizes. This non-monotonic dependence of the sign of selection on population size, known as sign inversion, exists across parameter space for both conservative and diversified bet hedgers. We apply our model to published data of bet hedging strategies to show that sign inversion exists for biologically relevant parameters in two study systems: \textit{Papaver dubium}, an annual poppy with variable germination phenology that grows in Central England, and \textit{Salmonella typhimurium}, a pathogenic bacteria that exhibits antibiotic persistence. Taken together, our results suggest that GMF is not enough to predict when bet hedging is adaptive.
 
 ### Built With <a name="built-with"></a>
 
@@ -33,6 +33,7 @@ Simulation code is written in the following languages and packages:
   * [Dates.jl Package](https://docs.julialang.org/en/v1/stdlib/Dates/)
   * [Base.Threads.jl Package](https://docs.julialang.org/en/v1/base/multi-threading/)
 * [MATLAB Programming Language](https://www.mathworks.com/products/MATLAB/programming-with-MATLAB.html)
+* [R Programming Language](https://www.r-project.org/)
 
 ### Julia Stochastic Simulations <a name="julia-sims"></a>
 
@@ -41,9 +42,13 @@ Stochastic, individual based simulations written in Julia. We model the evolutio
 Simulation code:
 * [bhpfix_sim.jl](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/julia_sims/bhpfix_sim.jl) constructs a normalized probability of fixation curve as a function of population size.
   * The code takes in 4 arguments: 1) environmental stochasticity type (on 1, or off 0); 2) phenotypic stochasticity type (on 1, or off 0); 3) pSpec of the invading bet hedger; and 4) Delta GMF.
-  * Used to construct Fig. 2, Fig. 3A
-* [paramspace.jl](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/julia_sims/paramspace.jl) extends the previous NPfix simulation across parameter space, for all values of pSpec and Delta GMF. The sign of selection for the NPFix curve at every point in parameter space is automatically classified as deleterious, neutral, sign inversion, beneficial, or unknown.
-  * Used to construct Fig. 4, Supplemental Fig. 2
+  * Used to construct Fig. 2
+* [paramspace.jl](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/julia_sims/paramspace.jl) extends the previous NPfix simulation on the "high risk / low risk" bet hedging strategy across parameter space, for all values of pSpec and Delta GMF. The sign of selection for the NPFix curve at every point in parameter space is classified as deleterious, neutral, sign inversion, beneficial, or unknown.
+  * Used to construct Fig. 3A, 3B, S2, and S3.
+* [hihi_paramspace.jl]() applies the previously developed parameter space survey to a "high risk / high risk" model of bet hedging.
+* [papaver_npfix.jl]() and [salmonella_npfix.jl]() adapt the NPfix simulations to the *Papaver dubium* and *Salmonella typhimurium* examples respectively.
+  * Parameters for *Papaver dubium* germination phenology estimated from [Arthur 1973](https://www.nature.com/articles/hdy197321)
+  * Parameters for *Salmonella typhimurium* antibiotic persistence estimated from [Arnoldini 2014](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001928)
 
 ### MATLAB Markov Numerics <a name="MATLAB-sims"></a>
 
@@ -64,6 +69,11 @@ Simulation code:
   * Used to construct Fig. 2, Fig. 3A
 * [markovmodel_genstats.m](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/MATLAB_sims/markovmodel_genstats.m) analyzes Markov matrices at the end of the first generation and first effective generation
   * Used to construct Fig. 3B-C, Supplemental Fig. 1
+
+### R *Papaver* Climate Estimates <a name="MATLAB-sims"></a>
+* []() constructs distributions for the realized mean winter temperature, number of days below 0C, and number of days below -1.6C.
+  * Central England historical climate data taken from [Parker 1992](https://www.metoffice.gov.uk/hadobs/hadcet/)
+  * Threshold between "mild" and "harsh" winters were calculated for each climatic variable as the mean of the 1968 and 1966 measurmenets, which were the observed "harsh" and "mild" years respectively in [Arthur 1973](https://www.nature.com/articles/hdy197321)
 
 <!-- CONTACT -->
 ## Contact <a name="contact"></a>
