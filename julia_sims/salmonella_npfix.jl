@@ -1,28 +1,24 @@
 using Distributions
 using TickTock
 
-#julia ch1_salmonella.jl $filename $pA $N $SLURM_ARRAY_TASK_ID
+#warning, this code will take forever to run as is. parallelization is highly recommended
 
+#environmental and phenotypic stochasticity are both turned "on"
 envs = true
 etype = "e1"
 phenos = true
 ptype = "p1"
 
-filename = join([ARGS[1], ARGS[4], "csv"], ".")
-pA = parse(Float64,ARGS[2])
-all_pSpec = [0.81]
-
+filename = "salmonella_npfix.csv"
 println(filename)
 
-#maxn = parse(Int64, ARGS[4])
-#maxn = 9
-#lengthn = 10
-#a=range(0, stop=maxn, length = lengthn)
-#allN_1=[convert(Int64,floor(10^i)) for i in a] #creates a vector of 10 population
-#allN = allN_1[6:end]
-#n_idx = parse(Int64,ARGS[3])
-N = parse(Int64,ARGS[3])
-reps = 100*N
+all_pA = [0.9, 0.931, 0.935, 0.94, 0.95, 0.975] #pA = probability of not taking antibitiotics
+pSpec = 0.81
+
+maxn = 9 #log10 maximum population size surveyed
+lengthn = 10 #number of population sizes 
+a=range(0, stop=maxn, length = lengthn)
+allN=[convert(Int64,floor(10^i)) for i in a] #creates a vector of population sizes surveyed
 
 tick()
 
@@ -32,7 +28,7 @@ function stoch_env_select(pA) #function that randomly generates the environment
     #if returns true ==> in env. A; if returns false ==> in env. B
 end
 
-function det_env_select(generations, env_init)
+function det_env_select(generations, env_init) #function that deterministically generates the environment
     if env_init
         if isodd(generations)
             env = true
@@ -48,7 +44,7 @@ function det_env_select(generations, env_init)
     end
 end
 
-function stoch_pheno(pSpec, BHcount)
+function stoch_pheno(pSpec, BHcount) #function that randomly generates the phenotypic distribution of bet hedger offspring
     SpecPhe = rand(Binomial(BHcount, pSpec))
     #generates number of bet hedgers with specialist phenotype
     ConsPhe = BHcount-SpecPhe
@@ -56,7 +52,7 @@ function stoch_pheno(pSpec, BHcount)
     #returns a list with the # of bet hedgers with specialist and conservative phenotypes respectively
 end
 
-function det_pheno(pSpec, BHcount)
+function det_pheno(pSpec, BHcount) #function that deterministically calculates the phenotypic distribution of bet hedger offspring
     SpecPhe = BHcount*pSpec
     #generates number of bet hedgers with specialist phenotype
     ConsPhe = BHcount-SpecPhe
@@ -72,16 +68,14 @@ function reproduction(env, PopNum, PopSize, spec, cons, phenotype_counts)
     #simulates random wright fisher reproduction in one generation
     wBH = Float64 #bet hedger fitness
     wWT = Float64 #wild type specialist fitness
-    if env #collapse if else statement
+    if env 
         #if in env. A
         wBH = phenotype_counts[1]/PopNum[1]*spec[1]+phenotype_counts[2]/PopNum[1]*cons[1]
-        wWT = spec[1]
-        #wWT = cons[1]
+        wWT = spec[1] #WT always has fast-growing phenotype
     else
         #else in env. B
         wBH = phenotype_counts[1]/PopNum[1]*spec[2]+phenotype_counts[2]/PopNum[1]*cons[2]
         wWT = spec[2]
-        #wWT = cons[2]
     end
     wBar = average_fitness(PopNum, wBH, wWT)
     p = PopNum[1]/PopSize * wBH/wBar
@@ -93,18 +87,20 @@ function reproduction(env, PopNum, PopSize, spec, cons, phenotype_counts)
 end
 
 function generation(PopNum, spec, cons, pA, env_init, pSpec, generations, envs, phenos)
+    #determine the environment for this generation
     if envs
-        env = stoch_env_select(pA) #determines the environment for this generation
+        env = stoch_env_select(pA)
     else
         env = det_env_select(generations, env_init)
     end
+    #determine the realized phenotypic makeup of the BH
     if phenos
-        phenotype_counts = stoch_pheno(pSpec, PopNum[1]) #determines the realized phenotypic makeup of the BH
+        phenotype_counts = stoch_pheno(pSpec, PopNum[1]) 
     else
         phenotype_counts = det_pheno(pSpec, PopNum[1])
     end
+    #simulate random wright fisher reproduction based on fitness values given by environment and phenotypic distribution
     PopNum = reproduction(env, PopNum, sum(PopNum), spec, cons, phenotype_counts)
-    #simulates random wright fisher reproduction
     return PopNum
 end
 
@@ -112,8 +108,8 @@ function simulate(PopSize::Int64, pA::Float64, pSpec::Float64, envs::Bool, pheno
     InitNum = 1 #number of bh to start
     PopNum = [InitNum, PopSize-InitNum]
     #PopNum = [# of BH, # of WT]
-    spec = [1.8, 0.003] #specialist phenotype in Env. A and Env. B respectively
-    cons = [1, 0.04] #conservative phenotype in Env. A and Env. B respectively
+    spec = [1.8, 0.003] #WT fast growing / antibiotic sensitive phenotype in Env. A (no antibiotics) and Env. B (yes antibiotics) respectively
+    cons = [1, 0.04] #persister slow growing / antibiotic tolerant phenotype in Env. A (no antibiotics) and Env. B (yes antibiotics) respectively
     generations::Int64 = 1
     env_init = convert(Bool, rand(Binomial(1,pA)))
     while 0<PopNum[1]<PopSize
@@ -121,31 +117,33 @@ function simulate(PopSize::Int64, pA::Float64, pSpec::Float64, envs::Bool, pheno
         generations+=1
     end
     return PopNum[1]==PopSize
-    #returns True (1) if BH win, False (0) otherwise
+    #returns True (1) if BH reaches fixations, False (0) if BH is lost
 end
 
 colnames = ["N", "NPfix", "pA"]
-out = open(filename, "w") #creates a new output file whose filename includes parameters
-write(out, join(colnames, ","), "\n") #populates output file with vector of 10 population sizes
+out = open(filename, "w") #creates a new output file 
+write(out, join(colnames, ","), "\n") #populates output file with column names
 close(out)
 
-for pSpec in all_pSpec
+for pA in all_pA
     c = 0 #counts number of replicates that reach fixation
-    for run = 1:reps
-        if peektimer() > 536400
-            r = run-1
-            println(((c/r)*N))
-            println(r)
+    for N in allN
+        if N < 10^5
+            reps = 1000*10^5
+        else
+            reps = 100*N
         end
-        c += simulate(N, pA, pSpec, envs, phenos) #c increases by 1 for each rep that reaches fixation
-    end
-    npf = ((c/reps)*N)
-    output = [N, npf, pA]
-    out = open(filename, "a") #adds the NPfix vector to the output file
-    write(out, join(output, ","), "\n")
-    close(out)
+        for run = 1:reps
+            c += simulate(N, pA, pSpec, envs, phenos) #c increases by 1 for each rep that reaches fixation
+        end
+        npf = ((c/reps)*N)
+        output = [N, npf, pA]
+        out = open(filename, "a") #adds the NPfix value to the output file
+        write(out, join(output, ","), "\n")
+        close(out)
 
-    println(npf)
+        println(npf)
+    end
 end
 
 tock()
