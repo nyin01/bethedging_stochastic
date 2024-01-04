@@ -10,7 +10,8 @@
       <ul>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#julia-sims">Julia Stochastic Simulations</a></li>
-        <li><a href="#MATLAB-sims">MATLAB Markov Numerics</a></li>
+        <li><a href="#MATLAB-sims">R Code</a></li>
+        <li><a href="#R-code">MATLAB Markov Numerics</a></li>
       </ul>
     </li>
     <li><a href="#contact">Contact</a></li>
@@ -45,8 +46,8 @@ Simulation code:
   * Used to construct Fig. 2
 * [paramspace.jl](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/julia_sims/paramspace.jl) extends the previous NPfix simulation on the "high risk / low risk" bet hedging strategy across parameter space, for all values of pSpec and Delta GMF. The sign of selection for the NPFix curve at every point in parameter space is classified as deleterious, neutral, sign inversion, beneficial, or unknown.
   * Used to construct Fig. 3A, 3B, S2, and S3.
-* [hihi_paramspace.jl]() applies the previously developed parameter space survey to a "high risk / high risk" model of bet hedging.
-* [papaver_npfix.jl]() and [salmonella_npfix.jl]() adapt the NPfix simulations to the *Papaver dubium* and *Salmonella typhimurium* examples respectively.
+* [hihi_paramspace.jl]([julia_sims/hihi_paramspace.jl](https://github.com/mweissman97/bethedging_stochastic/blob/e8101cf72d5199c734076d28a7e80926c9a36d1a/julia_sims/hihi_paramspace.jl)) applies the previously developed parameter space survey to a "high risk / high risk" model of bet hedging.
+* [papaver_npfix.jl]([julia_sims/papaver_npfix.jl](https://github.com/mweissman97/bethedging_stochastic/blob/e8101cf72d5199c734076d28a7e80926c9a36d1a/julia_sims/papaver_npfix.jl)) and [salmonella_npfix.jl](https://github.com/mweissman97/bethedging_stochastic/blob/e8101cf72d5199c734076d28a7e80926c9a36d1a/julia_sims/salmonella_npfix.jl) adapt the NPfix simulations to the *Papaver dubium* and *Salmonella typhimurium* examples respectively.
   * Parameters for *Papaver dubium* germination phenology estimated from [Arthur 1973](https://www.nature.com/articles/hdy197321)
   * Parameters for *Salmonella typhimurium* antibiotic persistence estimated from [Arnoldini 2014](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001928)
 
@@ -70,7 +71,7 @@ Simulation code:
 * [markovmodel_genstats.m](https://github.com/mweissman97/bethedging_stochastic/blob/2427366dea02216dcdd6033350f6a0abaec06516/MATLAB_sims/markovmodel_genstats.m) analyzes Markov matrices at the end of the first generation and first effective generation
   * Used to construct Fig. 3B-C, Supplemental Fig. 1
 
-### R *Papaver* Climate Estimates <a name="MATLAB-sims"></a>
+### R *Papaver* Climate Estimates <a name="R-code"></a>
 * []() constructs distributions for the realized mean winter temperature, number of days below 0C, and number of days below -1.6C.
   * Central England historical climate data taken from [Parker 1992](https://www.metoffice.gov.uk/hadobs/hadcet/)
   * Threshold between "mild" and "harsh" winters were calculated for each climatic variable as the mean of the 1968 and 1966 measurmenets, which were the observed "harsh" and "mild" years respectively in [Arthur 1973](https://www.nature.com/articles/hdy197321)
