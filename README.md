@@ -1,5 +1,5 @@
 # Beyond the (geometric) mean: stochastic models undermine deterministic predictions of bet hedger evolution
-[Link to paper](linktopaper).
+[Link to preprint]((https://www.biorxiv.org/content/10.1101/2023.07.11.548608v1)).
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -75,9 +75,11 @@ Simulation code:
   * Used to construct Fig. 3B-C, Supplemental Fig. 1
 
 ### R *Papaver* Climate Estimates <a name="R-code"></a>
-* []() constructs distributions for the realized mean winter temperature, number of days below 0C, and number of days below -1.6C.
-  * Central England historical climate data taken from [Parker 1992](https://www.metoffice.gov.uk/hadobs/hadcet/)
+
+* [papaver_climate.R](https://github.com/mweissman97/bethedging_stochastic/blob/f1d5db755cb8260c03c13f89899943a4cd397101/R-code/papaver_climate.R) constructs distributions for the realized mean winter temperature, number of days below 0C, and number of days below -1.6C.
+  * Central England historical climate data taken from [Parker 1992](https://www.metoffice.gov.uk/hadobs/hadcet/).
   * Threshold between "mild" and "harsh" winters were calculated for each climatic variable as the mean of the 1968 and 1966 measurmenets, which were the observed "harsh" and "mild" years respectively in [Arthur 1973](https://www.nature.com/articles/hdy197321)
+  * Used to construct Fig. S1
 
 <!-- CONTACT -->
 ## Contact <a name="contact"></a>
