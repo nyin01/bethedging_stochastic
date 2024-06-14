@@ -1,0 +1,1 @@
+julia julia_scripts/delayedgerm_sim.jl 1 1 1 0.5 0.268 1 15 0.2 10.092 S22

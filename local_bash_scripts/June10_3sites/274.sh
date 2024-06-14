@@ -1,0 +1,1 @@
+julia julia_scripts/delayedgerm_sim_dist.jl 1 1 1 0.165 1 3 1.306 1.403 FR
